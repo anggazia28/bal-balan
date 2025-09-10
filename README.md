@@ -8,7 +8,7 @@
 
 ### Cara Implementasi checklist step by step
 
-####1. Membuat proyek Django baru####
+#### 1. Membuat proyek Django baru
 Siapkan direktori yang akan digunakan untuk proyek lalu aktifkan environment. Instal semua dependencies proyek lalu tinggal menjalankan django-admin startproject <nama_proyek> yang akan membuat struktur direktori proyek django secara otomatis. Jika struktur direktori sudah selesai dibuat maka tinggal meengatur agar local host dan host lain dapat mengakses aplikasi dengan mengaturnya di setting.py.
 
 #### 2. Cara membuat aplikasi
@@ -33,7 +33,7 @@ Setelah semua langkah sudah dilakukan, lakukan deployment ke PWS dengan membuat 
 Buat file baru di direktori utama proyek dengan nama <README.md> dan isi dengan jawaban
 
 ### Bagan request client ke web aplikasi berbasis Django serta kaitan antara <urls.py>, <views.py>, <models.py>, dan berkahs <html>
-![description](https://drive.google.com/uc?export=view&id=1S2qUuFF2JsCjEW5vKEQsRgYrPFK1sa40)
+!["bagan"](https://drive.google.com/uc?export=view&id=1S2qUuFF2JsCjEW5vKEQsRgYrPFK1sa40)
 
 User melalui web browser mengirimkan request dengan HTTP ke server lalu melalui manage.py akan diproses dan mengarahkan ke urls.py dimana di urls.py akan mencocokan URL dengan daftar yg ada. Jika ditemukan kecocokan maka akan dilanjutkan ke view.py dan jika tidak akan mengembalikan 404 Not Found. Pada views.py request akan diproses dan jika membutuhkan data dari database maka akan melibatkan models.py untuk mengambil data dari database. Di views ini ada data yang akan dimasukan ke template(html) lalu setelah digabungkan dan dirender, hasilnya akan dikembalikan ke user.
 
