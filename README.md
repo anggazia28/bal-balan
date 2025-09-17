@@ -1,52 +1,54 @@
-# Tugas Individu 2 PBP
+# Tugas Individu PBP
 
 ## - Name : Angga Ziaurrohchman
 ## - NPM : 2406495943
 ## - Kelas : PBP E
 
-#Link :https://angga-ziaurrohchman-balbalan.pbp.cs.ui.ac.id/# 
+## Link pws :https://angga-ziaurrohchman-balbalan.pbp.cs.ui.ac.id/ 
+## Link Dokumentasi Tugas
+### [Tugas 2](../../wiki/[README]-Tugas-Individu-2)
 
-### Cara Implementasi checklist step by step
+### Mengapa kita perlu data delivery dalam pengimplementaian sebuah plaform
 
-#### 1. Membuat proyek Django baru
-Siapkan direktori yang akan digunakan untuk proyek lalu aktifkan environment. Instal semua dependencies proyek lalu tinggal menjalankan django-admin startproject <nama_proyek> yang akan membuat struktur direktori proyek django secara otomatis. Jika struktur direktori sudah selesai dibuat maka tinggal meengatur agar local host dan host lain dapat mengakses aplikasi dengan mengaturnya di setting.py.
+Data delivery berguna agar data di platform kita yang ada pada database dapat dikirim ke sistem lain dan data dapat diakses dengan lebih cepat dan aman tanpa harus masuk ke sistem database terlebih dahulu, Selain itu dapat digunakan dengan API delivery
 
-#### 2. Cara membuat aplikasi
-Membuat aplikasi memakai python manage.py startapp main lalu mendaftarkannya di installed app.
+### Mana yang lebih baik antara XML dan JSON? mengapa JSON lebih populer dibandingkan XML
 
-#### 3. Melakukan routing pada proyek
-Setelah proyek berhasil dibuat, tambahkan rute pada <urls.py> untuk mengarahkan request ke aplikasi, pada hal ini adalah main melalui <show_main>
+Karena kebanyakan scripting language itu javascript dan JSON lebih kompatibel ke javascript, berbeda dengan XML yang lebih strict. JSON juga punya kelebihan seperti lebih ringan dan sintaks lebih gampang (ringkas) dibaca.
 
-#### 4. Membuat model pada aplikasi main 
-Pada file <models.py> didalam aplikasi main, buat model <Product> yang memiliki atribut <name>,<price>,<thumbnail>,<category>,<is_featured>, dan atribut tambahan lain yang digunakan sebagai penyimpanan data produk ke dalam database
+JSON lebih populer karena ukurannya lebih kecil daripada XML sehingga transfer data akan lebih cepat. Struktur JSON juga seperti dictionary (key:value) sehingga lebih mudah dipakai. Dalam integrasi web, JSON bisa diparse oleh JavaScript tanpa tambahan Library.
 
-#### 5. Fungsi pada views.py 
-Pada <views.py> buat context sbg isian data yang akan dikirimkan ke tampilan html atau yang kita sebut template dlm hal ini, jadi html sbg template dan views sbg isi yang akan ditampilkan dalam template nya
+### Fungsi <is_valid()> pada form Django
 
-#### 6. Routing pada urls.py aplikasi main untuk memetakan fungsi 
-Di <urls.py> pada aplikasi main, tambah impor fungsi include lalu tambah rute url di path pada bagian urlpattern agar dapat mengarahkan tampilan ke main
+<is_valid()> digunakan untuk mengecek data yang disubmit sesuai validation rules yang ada seperti nama produk dibatasi hingga 100 karakter, maka jika lebih dari itu akan menampilkan pesan eror
 
-#### 7. Melakukan deployment ke PWS 
-Setelah semua langkah sudah dilakukan, lakukan deployment ke PWS dengan membuat proyek baru pada PWS dan mengkonfigurasikan environment, memberikan akses host di <setting.py> lalu push dan login menggunakan credential
+### Mengapa kita membutuhkan <csrf_token> saat membuat form di Django? dan bagaimana jika tidak ? apakah itu dapat dimanfaatkan oleh penyerang?
 
-#### 8. Membuat <README.md> yang berisi tautan menuju aplikasi PWS dan jawaban pertanyaan
-Buat file baru di direktori utama proyek dengan nama <README.md> dan isi dengan jawaban
+Token ini di-generate secara otomatis oleh Django untuk mencegah serangan berbahaya. Ini berguna agar yang dapat mengakses request POST (dalam konteks tugas ini berarti membuat news atau menambhakan produk) web hanyalah domain yang kita izinkan dalam CSRF_TRUSTED_ORIGINS
 
-### Bagan request client ke web aplikasi berbasis Django serta kaitan antara <urls.py>, <views.py>, <models.py>, dan berkahs <html>
-!["bagan"](https://drive.google.com/uc?export=view&id=1S2qUuFF2JsCjEW5vKEQsRgYrPFK1sa40)
+Jika tidak menggunakan ini maka server akan menerima semua request sehingga nanti penyerang dapat mendapatkan akses seperti user
 
-User melalui web browser mengirimkan request dengan HTTP ke server lalu melalui manage.py akan diproses dan mengarahkan ke urls.py dimana di urls.py akan mencocokan URL dengan daftar yg ada. Jika ditemukan kecocokan maka akan dilanjutkan ke view.py dan jika tidak akan mengembalikan 404 Not Found. Pada views.py request akan diproses dan jika membutuhkan data dari database maka akan melibatkan models.py untuk mengambil data dari database. Di views ini ada data yang akan dimasukan ke template(html) lalu setelah digabungkan dan dirender, hasilnya akan dikembalikan ke user.
+### Implementasi
 
-- urls.py = mencari atau mengarahkan request ke aplikasi yang tersedia
-- views.py = memproses logika tampilan dan data
-- models.py = menghubungkan ke database dan menyediakan data apabila dibutuhkan
-- html = tampilan yang dikembalikan ke user
+#### Menambahkan 4 fungsi views
+Menambahkan/Menuliskan fungsi baru (def) pada file views.py dengan return yang diinginkan, pada konteks ini salah satu contohnya adalah <HttpResponse(xml_data, content_type="application/xml")> yang akan memberikan respon berupa file xml yang berisi data dari produk baik semua atau yang berdasarkan id
 
-### Peran setting.py
-setting.py adalah pusat kendali dalam proyek Django karena semua konfigurasi inti ada dan diatur oleh setting.py. Hal hal yang biasanya diatur adalah database apa saja yang perlu dipakai, aplikasi mana yang aktif, mekanisme request, dan lokasi tiap file, template, dan data. 
+#### Membuat routing URL untuk masing masing views
+Menambahkan nama function di import file urls.py agar dapat function dapat diakses lalu menamnbahkan path url ke urlpattern agar terdaftar
 
-### Cara kerja migrasi data
-Migrasi database pada Django adalah mekanisme untuk menjaga konsistensi antara definisi model pada models.py dengan struktur database yang sebenarnya. Dimulai dengan perintah makemigrations, yang menghasilkan berkas migrasi berisi catatan perubahan model. Selanjutnya, perintah migrate akan mengeksekusi berkas tersebut menjadi instruksi SQL untuk membuat atau mengubah tabel di database. Sistem migrasi ini juga menyimpan riwayat perubahan sehingga pengembang dapat melakukan sinkronisasi maupun rollback bila diperlukan.
+#### Membuat halaman yang menampilkan data objek model yang memiliki tombol "Add" dan "Detail"
+Mengedit file main.html pada templates pada aplikasi dengan menambahkan tombol/button yang dapat berpindah ketika dipencet ke link/url yang disiapkan melalui <href="{% url 'main:add_product' %}"> (format djanglo template)
 
-### Mengapa framework Django dijadikan permulaan pembelajaran pengembangan perangkat lunak
-Karena Django menyediakan hampir seluruh kebutuhan dasar pengembangan aplikasi web secara terintegrasi, seperti ORM, autentikasi, sistem templating, dan panel administrasi yang memudahkan mahasiswa  untuk memahami konsep arsitektur perangkat lunak modern, mulai dari pemisahan lapisan (URL, view, model, template), pengelolaan basis data, hingga aspek keamanan. 
+Juga menyiapkan file html lain yang merupakan tujuan dari button tersebut, dlm tugas ini ada 2 yaitu detail dan add
+
+#### Membuat halaman form untuk menambahkan objek model 
+file html lain yang sudah disebutkan tadi yaitu add dengan menyambungkannya dengan file forms.py yg berisi atribut apa saja yang akan digunakan 
+
+#### Membuat halaman yang menampilkan detail dari setiap data 
+file html lain yang sudah disebutkan juga yaitu detail, berisi sebuah atribut/data dari produk yang ingin ditampilkan beserta tombol back yang mengarah ke halaman utama (main.html)
+
+### Screenshoot Postman
+![alt text](<Screenshot 2025-09-17 105512.png>) 
+![alt text](<Screenshot 2025-09-17 103808.png>) 
+![alt text](<Screenshot 2025-09-17 103831.png>) 
+![alt text](<Screenshot 2025-09-17 105441.png>)
