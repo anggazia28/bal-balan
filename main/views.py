@@ -22,7 +22,7 @@ def show_main(request):
     context = {
         'nama_toko' : 'Bal balan',
         'npm' : '2406495943',
-        'name': 'Angga Ziaurrohchman',
+        'name': request.user.username,
         'class': 'PBP E',
         'product_list': product_list,
         'last_login': request.COOKIES.get('last_login', 'Never'),
