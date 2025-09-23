@@ -14,6 +14,7 @@
 Modul bawaan dari django yang memungkinkan/menyiapkan proses login user yang sudah berisi field username dan password beserta validasi input serta autentikasi ke database.
 
 Kelebihannya lebih praktis, kita tidak perlu membangun proses login dari awal dan hanya tinggal memakai/menerapkan modul yg sudah ada. Selain itu modul ini juga dapat dikustomisasi sehingga lebih fleksibel. 
+Kekurangannya ada pada sifat generiknya sehingga kita masih perlu menyiapkan field baru agar laman login lebih proper
 
 ### Apa perbedaan antara autentikasi dan ototrisasi dan Bagaimana Django mengimplementasikan kedua konsep tersebut
 Autentikasi adalah proses mencocokan/mengecek apakah user/data yang masuk atau login ini benar benar ada sebelumnya pada database, sementara otorisasi adalah memberikan akses untuk user yang login kepada fitur fitur yg sesuai dengan role nya. 
