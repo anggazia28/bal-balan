@@ -5,51 +5,50 @@
 ## - Kelas : PBP E
 
 ## Link pws :https://angga-ziaurrohchman-balbalan.pbp.cs.ui.ac.id/ 
+
 ## Link Dokumentasi Tugas
 ### [Tugas 2](../../wiki/[README]-Tugas-Individu-2)
+### [Tugas 3](../../wiki/[README]-Tugas-Individu-3)
 
-### Mengapa kita perlu data delivery dalam pengimplementaian sebuah plaform
+### Apa itu Django AuthenticationForm? apa kelebihan dan kekurangannya 
+Modul bawaan dari django yang memungkinkan/menyiapkan proses login user yang sudah berisi field username dan password beserta validasi input serta autentikasi ke database.
 
-Data delivery berguna agar data di platform kita yang ada pada database dapat dikirim ke sistem lain dan data dapat diakses dengan lebih cepat dan aman tanpa harus masuk ke sistem database terlebih dahulu, Selain itu dapat digunakan dengan API delivery
+Kelebihannya lebih praktis, kita tidak perlu membangun proses login dari awal dan hanya tinggal memakai/menerapkan modul yg sudah ada. Selain itu modul ini juga dapat dikustomisasi sehingga lebih fleksibel. 
 
-### Mana yang lebih baik antara XML dan JSON? mengapa JSON lebih populer dibandingkan XML
+### Apa perbedaan antara autentikasi dan ototrisasi dan Bagaimana Django mengimplementasikan kedua konsep tersebut
+Autentikasi adalah proses mencocokan/mengecek apakah user/data yang masuk atau login ini benar benar ada sebelumnya pada database, sementara otorisasi adalah memberikan akses untuk user yang login kepada fitur fitur yg sesuai dengan role nya. 
 
-Karena kebanyakan scripting language itu javascript dan JSON lebih kompatibel ke javascript, berbeda dengan XML yang lebih strict. JSON juga punya kelebihan seperti lebih ringan dan sintaks lebih gampang (ringkas) dibaca.
+Pada proses autentikasi, django sudah punya sistem bawaan yaitu contrib.auth yang jika digunakan akan memudahkan kita karena proses autentikasi backend (seperti memverifikasi, menyimpan informasi session) akan secara otomatis dilakukan oleh django, tanpa harus disetting secara manual. Pada proses otorisasi, django menerapkan flag khusus untuk tiap user, jadi objek user punya atribut seperti grup yang nantinya dalam grup itu bisa kita tentukan akses/permission apa saja yang diberikan. Dalam function function yang akan diberikan pembatasan berdasarkan grup, dpat diberikan decorator diatas functionnya. 
 
-JSON lebih populer karena ukurannya lebih kecil daripada XML sehingga transfer data akan lebih cepat. Struktur JSON juga seperti dictionary (key:value) sehingga lebih mudah dipakai. Dalam integrasi web, JSON bisa diparse oleh JavaScript tanpa tambahan Library.
+### Apa kelebihan dan kekurangan session dan cookies dalam konteks menyimpan state di aplikasi web?
+Cookies lebih sederhana karena bisa langsung dibaca via HTTP header, data yang disimpan tidak terlalu banyak, namun kapasitas maksimal 4kb, kurang aman karena data disimpan di browser, dan dapat membebani request.
 
-### Fungsi <is_valid()> pada form Django
+Session lebih aman karena data tidak disimpan di browser melainkan di server, kapasitas lebih besar, dan lebih mudah dikontrol karena admin web dapat menghapus session. Akan tetapi semakin banyak user, semakin besar pula storage manajemen session di server
 
-<is_valid()> digunakan untuk mengecek data yang disubmit sesuai validation rules yang ada seperti nama produk dibatasi hingga 100 karakter, maka jika lebih dari itu akan menampilkan pesan eror
+### Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai ? Bagaimana Django menangani hal tersebut?
+Tergantung, dapat dikatakan cookies cukup namun bukan berarti aman absolut by default karena banyak potensi potensi risiko yang bisa muncul seperti Injection XSS yaitu pencurian data dalam cookies jika peretas berhasil melakukan injeksi kode Javascript yang akan dieksekusi oleh client dan mencuri cookies. Selain itu terdapat potensi data dalam cookie bisa dilihat di jaringan jika tanpa HTTPS dan masih banyak potensi resiko lain. 
 
-### Mengapa kita membutuhkan <csrf_token> saat membuat form di Django? dan bagaimana jika tidak ? apakah itu dapat dimanfaatkan oleh penyerang?
+Penanganan Django untuk hal hal tersebut adalah seperti menyimpan data di session dan id session di cookies, rotasi session key, CSRF, 
 
-Token ini di-generate secara otomatis oleh Django untuk mencegah serangan berbahaya. Ini berguna agar yang dapat mengakses request POST (dalam konteks tugas ini berarti membuat news atau menambahakan produk) web hanyalah domain yang kita izinkan dalam CSRF_TRUSTED_ORIGINS
+### Implementasi tugas secara step by step
 
-Jika tidak menggunakan ini maka server akan menerima semua request sehingga nanti penyerang dapat mendapatkan akses seperti user
+#### Mengimplementasikan fungsi registrasi, login, dan logout 
+Mengimport method bawaan dari Django seperti UserCreationForm, Login, Logout, dari django.contrib.auth dan auth.forms. Lalu membuat function register, login, dan logout. Membuat template html dari login dan register, menambahkan button logout di main.html, dan menghubungkannya lewat urls.py dengan cara mengimport function yang sudah dibuat lalu menuliskan/memasukan path nya ke urlpatterns
 
-### Implementasi
+#### Membuat dua (2) akun pengguna dengan masing-masing tiga (3) dummy data menggunakan model yang telah dibuat sebelumnya untuk setiap akun di lokal
+Mendaftar akun dengan register lalu add product masing masing akun 3 product
 
-#### Menambahkan 4 fungsi views
-Menambahkan/Menuliskan fungsi baru (def) pada file views.py dengan return yang diinginkan, pada konteks ini salah satu contohnya adalah <HttpResponse(xml_data, content_type="application/xml")> yang akan memberikan respon berupa file xml yang berisi data dari produk baik semua atau yang berdasarkan id
+![alt text](<Screenshot 2025-09-22 225054.png>) 
+![alt text](<Screenshot 2025-09-22 225125.png>) 
+![alt text](<Screenshot 2025-09-22 225137.png>) 
+![alt text](<Screenshot 2025-09-22 225149.png>) 
+![alt text](<Screenshot 2025-09-22 225204.png>) 
+![alt text](<Screenshot 2025-09-22 225222.png>) 
 
-#### Membuat routing URL untuk masing masing views
-Menambahkan nama function di import file urls.py agar dapat function dapat dikenali dan nantinya dapat diarahkan ke function yang sesuai lalu menamnbahkan path url ke urlpattern agar terdaftar, jadi setiap ada request dengan path tersebut bisa langsung diarahkan (karena udh ada di path jalurnya) ke function yang terdaftar tadi
+#### Menghubungkan model Product dengan User
+Mengimpor method User dan menambahkan atribut user dengan datatype foreignKey pada Class Product di models.py lalu migration
 
-#### Membuat halaman yang menampilkan data objek model yang memiliki tombol "Add" dan "Detail"
-Mengedit file main.html pada templates pada aplikasi dengan menambahkan tombol/button yang dapat berpindah ketika dipencet ke link/url yang disiapkan melalui <href="{% url 'main:add_product' %}"> (format djanglo template)
-Dalam hal ini digunakan for loop agar semua item yang ada dapat ditampilkan
+#### Menampilkan detail informasi pengguna yang sedang logged in seperti username dan menerapkan cookies seperti last_login pada halaman utama aplikasi
+Mengimpor method yg dibutuhkan lalu menambahkan kode untuk mendaftarkan cookie last login dengan isi timestamp terkini agar dapat ditampilkan. Pada function show main ditambahkan item context baru yaitu last login untuk mengambil cookies last login sebelumnya/terakhir.
 
-Juga menyiapkan file html lain yang merupakan tujuan dari button tersebut, dlm tugas ini ada 2 yaitu detail dan add
-
-#### Membuat halaman form untuk menambahkan objek model 
-menambah file html lain yang sudah disebutkan tadi yaitu add dengan menyambungkannya dengan file forms.py yg berisi atribut apa saja yang akan digunakan 
-
-#### Membuat halaman yang menampilkan detail dari setiap data 
-menambah file html lain yang sudah disebutkan juga yaitu detail, berisi sebuah atribut/data dari produk yang ingin ditampilkan beserta tombol back yang mengarah ke halaman utama (main.html)
-
-### Screenshoot Postman
-![alt text](<Screenshot 2025-09-17 105512.png>) 
-![alt text](<Screenshot 2025-09-17 103808.png>) 
-![alt text](<Screenshot 2025-09-17 103831.png>) 
-![alt text](<Screenshot 2025-09-17 105441.png>)
+Modifikasi template yaitu main.html untuk menampilkan last login dan mengubah context name menjadi username dari client/request yang sedang aktif
