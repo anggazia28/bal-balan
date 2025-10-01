@@ -9,47 +9,45 @@
 ## Link Dokumentasi Tugas
 ### [Tugas 2](../../wiki/[README]-Tugas-Individu-2)
 ### [Tugas 3](../../wiki/[README]-Tugas-Individu-3)
+### [Tugas 4](../../wiki/[README]-Tugas-Individu-4)
 
-### Apa itu Django AuthenticationForm? apa kelebihan dan kekurangannya 
-Modul bawaan dari django yang memungkinkan/menyiapkan proses login user yang sudah berisi field username dan password beserta validasi input serta autentikasi ke database.
+### Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut! 
+Pada prioritas pertama adalah <!important> yang diikuti oleh inline style <style="> lalu <#id>, <.class> <[attr]> <:hover>, dan yang terakhir adalah urutan baris. Prioritas akan dilihat dari yang pertama, apabila sama sama prioritas misal sama sama important maka penentunya akan ada pada inline style nya, jika sama lalu id dan seterusnya. 
+//
 
-Kelebihannya lebih praktis, kita tidak perlu membangun proses login dari awal dan hanya tinggal memakai/menerapkan modul yg sudah ada. Selain itu modul ini juga dapat dikustomisasi sehingga lebih fleksibel. 
-Kekurangannya ada pada sifat generiknya sehingga kita masih perlu menyiapkan field baru agar laman login lebih proper
+### Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!
+Karena kita tidak selalu bisa memastikan user akan mengakses web dari device apa ? apakah android, IOS, desktop atau yang lainnya, sehingga jika kita tidak menerapkan responsive design maka tampilan web bisa saja rusak atau tidak sesuai dengan yang kita harapkan ketika itu dibuka pada device tertentu. Jika demikian maka user experience akan terganggu karena layout web yang tidak dapat menyesuaikan ukuran layar akan membuat keterbacaan teks, estetika, dan kemudahan penggunaan menjadi berkurang. 
 
-### Apa perbedaan antara autentikasi dan ototrisasi dan Bagaimana Django mengimplementasikan kedua konsep tersebut
-Autentikasi adalah proses mencocokan/mengecek apakah user/data yang masuk atau login ini benar benar ada sebelumnya pada database, sementara otorisasi adalah memberikan akses untuk user yang login kepada fitur fitur yg sesuai dengan role nya. 
+Contoh aplikasi yang sudah menerapkan adalah Instagram Web yang dapat menyesuaikan layoutnya ketika dibuka pada desktop
+Contoh aplikasi yang belum menerapkan adalah Website pemerintah dan web berita (namun sekarang aplikasi serupa jarang ditemukan)
 
-Pada proses autentikasi, django sudah punya sistem bawaan yaitu contrib.auth yang jika digunakan akan memudahkan kita karena proses autentikasi backend (seperti memverifikasi, menyimpan informasi session) akan secara otomatis dilakukan oleh django, tanpa harus disetting secara manual. Pada proses otorisasi, django menerapkan flag khusus untuk tiap user, jadi objek user punya atribut seperti grup yang nantinya dalam grup itu bisa kita tentukan akses/permission apa saja yang diberikan. Dalam function function yang akan diberikan pembatasan berdasarkan grup, dpat diberikan decorator diatas functionnya. 
+### Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+Margin adalah area kosong di sekitar border untuk memisahkan 1 elemen dengan elemen lain, border adalah garis tepi yang membungkus konten dan paddingnya, sementara padding sendiri adalah area kosong di sektiar konten yang menjadi jarak dari inti konten ke border
 
-### Apa kelebihan dan kekurangan session dan cookies dalam konteks menyimpan state di aplikasi web?
-Cookies lebih sederhana karena bisa langsung dibaca via HTTP header, data yang disimpan tidak terlalu banyak, namun kapasitas maksimal 4kb, kurang aman karena data disimpan di browser, dan dapat membebani request.
+Cara mengimplementasikannya ialah dapat diatur pada CSS dengan menambahkan margin, jika hanya 1 maka akan berlaku untuk semua sisi, 2 untuk vertikal dan horizontal dan jika ditentukan misal margin-top brti diatur bagian atas nya. Border dan Padding pun sama
 
-Session lebih aman karena data tidak disimpan di browser melainkan di server, kapasitas lebih besar, dan lebih mudah dikontrol karena admin web dapat menghapus session. Akan tetapi semakin banyak user, semakin besar pula storage manajemen session di server
+### Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+Flexbox dirancang untuk mengatur satu dimensi antar item sehingga dapat diatur posisi horizontal ataupun vertikalnya dengan gap yang sama besar sementara Grid layout berarti membagi atau menjadikan posisinya dengan format baris dan kolom secara eksplisit. Misal dalam satu tampilan ada beberapa item yang saling sejajar, maka dapat digunakan grid dengan kolom yang sama, 
 
-### Apakah penggunaan cookies aman secara default dalam pengembangan web, atau apakah ada risiko potensial yang harus diwaspadai ? Bagaimana Django menangani hal tersebut?
-Tergantung, dapat dikatakan cookies cukup namun bukan berarti aman absolut by default karena banyak potensi potensi risiko yang bisa muncul seperti Injection XSS yaitu pencurian data dalam cookies jika peretas berhasil melakukan injeksi kode Javascript yang akan dieksekusi oleh client dan mencuri cookies. Selain itu terdapat potensi data dalam cookie bisa dilihat di jaringan jika tanpa HTTPS dan masih banyak potensi resiko lain. 
+### Implementasi
 
-Penanganan Django untuk hal hal tersebut adalah seperti menyimpan data di session dan id session di cookies, rotasi session key, CSRF, 
+#### Fungsi delete dan edit Product
+Membuat function baru yaitu edit dan delete pada <views.py> lalu membuat template untuk edit dan import function pada <urls.py> serta menambahkannya ke path. Terakhir tentu saja menambahkan tombol edit dan delete pada template utama yaitu main dan menghubungkannya dengan href. 
 
-### Implementasi tugas secara step by step
+#### Kustomisasi halaman login, register, tambah product, edit product, dan detail
+Pertama perlu dimasukan script cdn di base html agar template django dapat terhubung dengan tailwind. Selanjutnya karena akan dikustomisasi tampilannya melalui tailwind css maka harus dikonfigurasi terlebih dahulu untuk static file pada aplikasi. 
 
-#### Mengimplementasikan fungsi registrasi, login, dan logout 
-Mengimport method bawaan dari Django seperti UserCreationForm, Login, Logout, dari django.contrib.auth dan auth.forms. Lalu membuat function register, login, dan logout. Membuat template html dari login dan register, menambahkan button logout di main.html, dan menghubungkannya lewat urls.py dengan cara mengimport function yang sudah dibuat lalu menuliskan/memasukan path nya ke urlpatterns
+Selanjutnya adalah menambahkan file global.css pada folder static dan dihubungkan dengan base.html dengan link rel. Sisanya adalah custom styling pada file css dan html sesuai yang diinginkan dengan menambahkan border, color, bg dll.
 
-#### Membuat dua (2) akun pengguna dengan masing-masing tiga (3) dummy data menggunakan model yang telah dibuat sebelumnya untuk setiap akun di lokal
-Mendaftar akun dengan register lalu add product masing masing akun 3 product
+#### Kustomisasi halaman daftar produk 
+##### Ada pesan belum ada produk
+Menaruh foto pada direktori static/image dan menambahkan kode pada main.html dengan if else jika produk tidak ada maka akan menampilkan teks dan foto tadi (ditautkan dengan img src)
 
-![alt text](<Screenshot 2025-09-22 225054.png>) 
-![alt text](<Screenshot 2025-09-22 225125.png>) 
-![alt text](<Screenshot 2025-09-22 225137.png>) 
-![alt text](<Screenshot 2025-09-22 225149.png>) 
-![alt text](<Screenshot 2025-09-22 225204.png>) 
-![alt text](<Screenshot 2025-09-22 225222.png>) 
+##### Terdapat card product
+Membuat template card product lalu menambahkan kode inlcude card pada main.html agar bagian itu dapat diisi oleh tampilan card dengan jumlah sesuai card atau product yg ada
 
-#### Menghubungkan model Product dengan User
-Mengimpor method User dan menambahkan atribut user dengan datatype foreignKey pada Class Product di models.py lalu migration
+#### Card product dengan button edit dan delete
+Menambahkan button atau teks di template card dan menyambungkannya ke urls edit dan delete dengan href.
 
-#### Menampilkan detail informasi pengguna yang sedang logged in seperti username dan menerapkan cookies seperti last_login pada halaman utama aplikasi
-Mengimpor method yg dibutuhkan lalu menambahkan kode untuk mendaftarkan cookie last login dengan isi timestamp terkini agar dapat ditampilkan. Pada function show main ditambahkan item context baru yaitu last login untuk mengambil cookies last login sebelumnya/terakhir.
-
-Modifikasi template yaitu main.html untuk menampilkan last login dan mengubah context name menjadi username dari client/request yang sedang aktif
+#### Navigation Bar
+Membuat template untuk navigation bar folder template aplikasi kemudian ditautkan pada <main.html> dengan <include>. 
