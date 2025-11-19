@@ -30,4 +30,3 @@ class Product(models.Model):
     thumbnail = models.URLField(blank=True, null=True)
     production_date = models.DateTimeField(auto_now_add=True)
     is_featured = models.BooleanField(default=False)
-    
